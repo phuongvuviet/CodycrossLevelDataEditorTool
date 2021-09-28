@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class CCBoardDataViewModel : MonoBehaviour
@@ -19,14 +20,78 @@ public class CCBoardDataViewModel : MonoBehaviour
             AddToLevelDataViewModelList(newRow);
         }
     }
-
-    public void ClearAllQuestionDataViewModelList()
+    
+    public void PopulateWordsColumn(string[] items)
+    {
+        AddNewLevelDataViewModelsIfNecessary(items);
+        for (int i = 0; i < items.Length; i++)
+        {
+            _questionDataViewModelList[i].WordTxt = items[i];
+        }
+    }
+    public void PopulatePicturesColumn(string[] items)
+    {
+        AddNewLevelDataViewModelsIfNecessary(items);
+        for (int i = 0; i < items.Length; i++)
+        {
+            _questionDataViewModelList[i].PictureTxt = items[i];
+        }
+    }
+    public void PopulateQuestionsColumn(string[] items)
+    {
+        AddNewLevelDataViewModelsIfNecessary(items);
+        for (int i = 0; i < items.Length; i++)
+        {
+            _questionDataViewModelList[i].QuestionTxt = items[i];
+        }
+    }
+    void AddNewLevelDataViewModelsIfNecessary(string[] items) 
+    {
+        if (items.Length > _questionDataViewModelList.Count)
+        {
+            for (int i = _questionDataViewModelList.Count; i < items.Length; i++)
+            {
+                CCQuestionDataViewModel newRow = Instantiate(questionDataViewModelPrefab, _rowParentGameObject.transform);
+                newRow.Init(this, "", "", "");
+                AddToLevelDataViewModelList(newRow);
+            }
+        }
+    }
+    public void DestroyAllQuestionDataViewModelList()
     {
         for (int i = 0; i < _questionDataViewModelList.Count; i++)
         {
             Destroy(_questionDataViewModelList[i].gameObject);
         }
         _questionDataViewModelList.Clear();
+    }
+    public void ClearAllQuestionDataViewModelList()
+    {
+        ClearPictureColData();
+        ClearQuestionColData();
+        ClearWordColData();
+    }
+
+    public void ClearQuestionColData()
+    {
+        for (int i = 0; i < _questionDataViewModelList.Count; i++)
+        {
+            _questionDataViewModelList[i].QuestionTxt = "";
+        }
+    }
+    public void ClearPictureColData()
+    {
+        for (int i = 0; i < _questionDataViewModelList.Count; i++)
+        {
+            _questionDataViewModelList[i].PictureTxt = "";
+        }
+    }
+    public void ClearWordColData()
+    {
+        for (int i = 0; i < _questionDataViewModelList.Count; i++)
+        {
+            _questionDataViewModelList[i].WordTxt = "";
+        }
     }
 
     private void AddToLevelDataViewModelList(CCQuestionDataViewModel newRow)
