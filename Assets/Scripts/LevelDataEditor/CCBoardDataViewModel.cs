@@ -20,13 +20,18 @@ public class CCBoardDataViewModel : MonoBehaviour
             AddToLevelDataViewModelList(newRow);
         }
     }
+
+    string FormatString(string input)
+    {
+        return input.Trim(' ', '\n', '\r', '\t');
+    }
     
     public void PopulateWordsColumn(string[] items)
     {
         AddNewLevelDataViewModelsIfNecessary(items);
         for (int i = 0; i < items.Length; i++)
         {
-            _questionDataViewModelList[i].WordTxt = items[i];
+            _questionDataViewModelList[i].WordTxt = FormatString(items[i]);
         }
     }
     public void PopulatePicturesColumn(string[] items)
@@ -34,7 +39,7 @@ public class CCBoardDataViewModel : MonoBehaviour
         AddNewLevelDataViewModelsIfNecessary(items);
         for (int i = 0; i < items.Length; i++)
         {
-            _questionDataViewModelList[i].PictureTxt = items[i];
+            _questionDataViewModelList[i].PictureTxt = FormatString(items[i]);
         }
     }
     public void PopulateQuestionsColumn(string[] items)
@@ -42,7 +47,7 @@ public class CCBoardDataViewModel : MonoBehaviour
         AddNewLevelDataViewModelsIfNecessary(items);
         for (int i = 0; i < items.Length; i++)
         {
-            _questionDataViewModelList[i].QuestionTxt = items[i];
+            _questionDataViewModelList[i].QuestionTxt = FormatString(items[i]);
         }
     }
     void AddNewLevelDataViewModelsIfNecessary(string[] items) 

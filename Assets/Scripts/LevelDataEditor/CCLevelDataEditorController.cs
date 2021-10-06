@@ -59,7 +59,12 @@ public class CCLevelDataEditorController : MonoBehaviour
     public void ParseJsonData()
     {
         string inputDataText = _jsonDataInputField.text;
-        inputDataText = inputDataText.Trim(new char[] {' ', '\t'});
+        inputDataText = inputDataText.Trim(new char[] {' ', '\t','\t'});
+        inputDataText = inputDataText.Replace("\n\r", "\n");
+        if (inputDataText[inputDataText.Length - 1] == '\n') 
+        {
+            inputDataText = inputDataText.Remove(inputDataText.Length - 1);
+        }
         string[] inputItems = null;
         switch (_curInputDataType)
         {
